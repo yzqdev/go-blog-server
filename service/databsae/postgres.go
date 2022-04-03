@@ -1,8 +1,8 @@
 package db
 
 import (
-	"github.com/astaxie/beego/config"
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
+	"github.com/beego/beego/v2/core/config"
 	"github.com/sirupsen/logrus"
 )
 
@@ -14,40 +14,35 @@ func NewPostgresDataBase() DataBase {
 	return &database
 }
 
-func (database *PostgresDataBase) GetStr() string{
+func (database *PostgresDataBase) GetStr() string {
 	conf, err := config.NewConfig("ini", "conf/app.conf")
 
 	if err != nil {
 		logrus.Fatalf(err.Error())
 	}
 
-	dbUser := conf.String("db::dbUser")
-	dbPass := conf.String("db::dbPass")
-	dbHost := conf.String("db::dbHost")
-	dbPort := conf.String("db::dbPort")
-	dbName := conf.String("db::dbName")
+	dbUser, _ := conf.String("db::dbUser")
+	dbPass, _ := conf.String("db::dbPass")
+	dbHost, _ := conf.String("db::dbHost")
+	dbPort, _ := conf.String("db::dbPort")
+	dbName, _ := conf.String("db::dbName")
 
-	return "user="+dbUser+" host="+dbHost+" port="+dbPort+" password="+dbPass+" dbname="+dbName+" sslmode=disable"
+	return "user=" + dbUser + " host=" + dbHost + " port=" + dbPort + " password=" + dbPass + " dbname=" + dbName + " sslmode=disable"
 
 }
 
-func (database *PostgresDataBase) GetDriverName() string{
+func (database *PostgresDataBase) GetDriverName() string {
 	return "postgres"
 }
 
-func (database *PostgresDataBase) GetAliasName() string{
+func (database *PostgresDataBase) GetAliasName() string {
 	return "default"
 }
 
-func (database *PostgresDataBase) GetDriver() orm.DriverType{
+func (database *PostgresDataBase) GetDriver() orm.DriverType {
 	return orm.DRPostgres
 }
 
-
-func init(){
-	Register("postgres",NewPostgresDataBase)
+func init() {
+	Register("postgres", NewPostgresDataBase)
 }
-
-
-
-

@@ -2,21 +2,21 @@ package db
 
 import (
 	"fmt"
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
 )
 
 type DataBase interface {
-	GetStr() 			string
-	GetDriverName() 	string
-	GetAliasName() 		string
-	GetDriver() 		orm.DriverType
+	GetStr() string
+	GetDriverName() string
+	GetAliasName() string
+	GetDriver() orm.DriverType
 }
 
 type Instance func() DataBase
 
 var adapters = make(map[string]Instance)
 
-func NewDataBase(adapterName string) (adapter DataBase, err error) {
+func NewDataBase(adapterName string, err2 error) (adapter DataBase, err error) {
 	instanceFunc, ok := adapters[adapterName]
 	if !ok {
 		err = fmt.Errorf("dataBase: unknown adapter name %q (forgot to import?)", adapterName)

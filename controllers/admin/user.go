@@ -1,14 +1,13 @@
 package admin
 
 import (
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
-	"github.com/astaxie/beego/validation"
+	"github.com/beego/beego/v2/client/orm"
+	"github.com/beego/beego/v2/core/validation"
+	beego "github.com/beego/beego/v2/server/web"
 	"go-blog/models/admin"
 	"go-blog/utils"
 	"time"
 )
-
 
 type UserController struct {
 	BaseController
@@ -25,7 +24,6 @@ func (c *UserController) List() {
 
 	c.Data["Status"] = status
 	c.Data["Name"] = name
-
 
 	o := orm.NewOrm()
 
@@ -98,16 +96,14 @@ func (c *UserController) Save() {
 	repassword := c.GetString("repassword")
 	email := c.GetString("email")
 
-
 	o := orm.NewOrm()
 	user := admin.User{
-		Name:    		name,
-		Password:      	utils.PasswordMD5(password,name),
-		Email:     		email,
-		Created:   		time.Now(),
+		Name:     name,
+		Password: utils.PasswordMD5(password, name),
+		Email:    email,
+		Created:  time.Now(),
 		Status:   1,
 	}
-
 
 	response := make(map[string]interface{})
 
@@ -139,8 +135,6 @@ func (c *UserController) Save() {
 			c.StopRun()
 		}
 	}
-
-
 
 	if id, err := o.Insert(&user); err == nil {
 		response["msg"] = "新增成功！"
@@ -178,7 +172,7 @@ func (c *UserController) Update() {
 		user.Name = name
 		user.Email = email
 		if password != "" {
-			user.Password = utils.PasswordMD5(password,name)
+			user.Password = utils.PasswordMD5(password, name)
 		}
 
 		valid := validation.Validation{}
@@ -194,7 +188,6 @@ func (c *UserController) Update() {
 			c.ServeJSON()
 			c.StopRun()
 		}
-
 
 		if valid.HasErrors() {
 			// 如果有错误信息，证明验证没通过
@@ -239,9 +232,9 @@ func (c *UserController) Delete() {
 	o := orm.NewOrm()
 	user := admin.User{Id: id}
 	if o.Read(&user) == nil {
-		if status == 1{
+		if status == 1 {
 			status = 2
-		}else{
+		} else {
 			status = 1
 		}
 		user.Status = status
@@ -265,4 +258,3 @@ func (c *UserController) Delete() {
 	c.ServeJSON()
 	c.StopRun()
 }
-

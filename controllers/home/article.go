@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
-	"github.com/astaxie/beego/validation"
+	"github.com/beego/beego/v2/client/orm"
+	"github.com/beego/beego/v2/core/validation"
+	beego "github.com/beego/beego/v2/server/web"
 )
 
 type ArticleController struct {
@@ -145,8 +145,8 @@ func (c *ArticleController) List() {
 	}
 
 	fmt.Println(&articles)
-
-	c.TplName = "home/" + beego.AppConfig.String("view") + "/list.html"
+	var view, _ = beego.AppConfig.String("view")
+	c.TplName = "home/" + view + "/list.html"
 }
 
 // 详情
@@ -169,8 +169,8 @@ func (c *ArticleController) Detail() {
 	c.StopRun()*/
 
 	c.Data["Data"] = &articles[0]
-
-	if beego.AppConfig.String("view") == "default" {
+	var view, _ = beego.AppConfig.String("view")
+	if view == "default" {
 		var listData = make(map[string][]*admin.Article)
 		var list []*admin.Article
 		_, err = o.QueryTable(article).Filter("status", 1).Filter("User__Name__isnull", false).Filter("Category__Name__isnull", false).OrderBy("id").RelatedSel().All(&list, "id", "title")
@@ -189,11 +189,10 @@ func (c *ArticleController) Detail() {
 
 	c.Log("detail")
 	c.Data["index"] = &articles[0].Title
-
 	if viewType == "single" {
-		c.TplName = "home/" + beego.AppConfig.String("view") + "/doc.html"
+		c.TplName = "home/" + view + "/doc.html"
 	} else {
-		c.TplName = "home/" + beego.AppConfig.String("view") + "/detail.html"
+		c.TplName = "home/" + view + "/detail.html"
 	}
 }
 

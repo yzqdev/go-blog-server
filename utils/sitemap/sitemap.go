@@ -12,7 +12,7 @@ import (
 
 var url = make(map[string]bool)
 
-func Sitemap(dir, baseUrl string) {
+func Sitemap(dir string, baseUrl string) {
 	//var dir string
 	//var baseUrl string
 

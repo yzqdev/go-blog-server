@@ -3,7 +3,7 @@ package utils
 import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/astaxie/beego/logs"
+	"github.com/beego/beego/v2/core/logs"
 	"regexp"
 	"strings"
 )
@@ -25,7 +25,6 @@ var blockTag = []string{
 var nextlineTag = []string{
 	"pre", "blockquote", "table",
 }
-
 
 //convert html to markdown
 //将html转成markdown
@@ -337,4 +336,3 @@ func getInnerHtml(selection *goquery.Selection) (html string) {
 	}
 	return
 }
-

@@ -1,7 +1,7 @@
 package common
 
 import (
-	"github.com/astaxie/beego"
+	beego "github.com/beego/beego/v2/server/web"
 	"math/rand"
 	"path"
 	"strconv"
@@ -16,12 +16,11 @@ func (c *UploadsController) Uploads() {
 
 	response := make(map[string]interface{})
 
-
 	f, h, err := c.GetFile("editormd-image-file")
 	defer f.Close()
 	if err != nil {
 		response["message"] = err.Error()
-		response["success"] =  0
+		response["success"] = 0
 	} else {
 
 		ext := path.Ext(h.Filename)
@@ -30,9 +29,9 @@ func (c *UploadsController) Uploads() {
 		err := c.SaveToFile("editormd-image-file", "static/uploads/"+filename)
 		if err != nil {
 			response["message"] = err.Error()
-			response["success"] =  0
-		}else {
-			response["success"] =  1
+			response["success"] = 0
+		} else {
+			response["success"] = 1
 			response["message"] = "Success."
 			response["url"] = "/static/uploads/" + filename
 		}

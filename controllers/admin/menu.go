@@ -2,7 +2,7 @@ package admin
 
 import (
 	"errors"
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
 	"go-blog/models/admin"
 	"go-blog/utils"
 	"strconv"
@@ -24,7 +24,6 @@ func (c *MenuController) URLMapping() {
 	c.Mapping("Add", c.Add)
 }
 
-
 // @router /menu/add [get]
 func (c *MenuController) Add() {
 
@@ -37,6 +36,7 @@ func (c *MenuController) Add() {
 	c.Data["Menu"] = menus
 	c.TplName = "admin/menu-add.html"
 }
+
 // Post ...
 // @Title Post
 // @Description create Menu
@@ -48,8 +48,8 @@ func (c *MenuController) Post() {
 
 	response := make(map[string]interface{})
 
-	sort , _ := c.GetInt("sort")
-	pid , _ := c.GetInt("pid")
+	sort, _ := c.GetInt("sort")
+	pid, _ := c.GetInt("pid")
 
 	if _, err := admin.AddMenu(&admin.Menu{
 		Title:  c.GetString("title"),
@@ -179,8 +179,8 @@ func (c *MenuController) Put() {
 	v.Target = c.GetString("target")
 	v.Url = c.GetString("url")
 	v.Title = c.GetString("title")
-	v.Pid,_= c.GetInt("pid")
-	v.Sort,_ = c.GetInt("sort")
+	v.Pid, _ = c.GetInt("pid")
+	v.Sort, _ = c.GetInt("sort")
 	if err := admin.UpdateMenuById(&v); err == nil {
 		response["msg"] = "修改成功！"
 		response["code"] = 200

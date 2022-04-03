@@ -1,9 +1,9 @@
 package admin
 
 import (
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
-	"github.com/astaxie/beego/validation"
+	"github.com/beego/beego/v2/client/orm"
+	"github.com/beego/beego/v2/core/validation"
+	beego "github.com/beego/beego/v2/server/web"
 	"go-blog/models/admin"
 	"go-blog/utils"
 	"time"
@@ -40,7 +40,7 @@ func (c *ArticleController) List() {
 	// 状态
 	if status != 0 {
 		qs = qs.Filter("status", status)
-	}else{
+	} else {
 		qs = qs.Filter("status__lt", 3)
 	}
 
@@ -65,7 +65,7 @@ func (c *ArticleController) List() {
 	qs = qs.SetCond(cond1)*/
 
 	// 获取数据
-	qs.OrderBy("-id","-pv").RelatedSel().Limit(limit).Offset(offset).All(&articles)
+	qs.OrderBy("-id", "-pv").RelatedSel().Limit(limit).Offset(offset).All(&articles)
 
 	// 统计
 	count, _ := qs.Count()
@@ -141,13 +141,12 @@ func (c *ArticleController) Save() {
 		Title:    title,
 		Tag:      tag,
 		Desc:     desc,
-		Html:	  html,
+		Html:     html,
 		Remark:   remark,
 		Status:   1,
 		User:     &admin.User{1, "", "", "", time.Now(), 0},
 		Category: &admin.Category{cate, "", 0, 0, 0},
 	}
-
 
 	/*c.Data["json"] = &article
 	c.ServeJSON()
@@ -175,8 +174,6 @@ func (c *ArticleController) Save() {
 			c.StopRun()
 		}
 	}
-
-
 
 	if id, err := o.Insert(&article); err == nil {
 		response["msg"] = "新增成功！"
@@ -291,12 +288,10 @@ func (c *ArticleController) Delete() {
 	c.StopRun()
 }
 
-
 func (c *ArticleController) Top() {
 	id, _ := c.GetInt("id", 0)
 
 	response := make(map[string]interface{})
-
 
 	o := orm.NewOrm()
 	article := admin.Article{Id: id}
@@ -305,7 +300,7 @@ func (c *ArticleController) Top() {
 		recommend := article.Recommend
 		if recommend == 0 {
 			article.Recommend = 1
-		}else{
+		} else {
 			article.Recommend = 0
 		}
 

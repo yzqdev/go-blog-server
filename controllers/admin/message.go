@@ -1,9 +1,9 @@
 package admin
 
 import (
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
-	"github.com/astaxie/beego/validation"
+	"github.com/beego/beego/v2/client/orm"
+	"github.com/beego/beego/v2/core/validation"
+	beego "github.com/beego/beego/v2/server/web"
 	"go-blog/models/admin"
 	"go-blog/utils"
 )
@@ -13,7 +13,6 @@ type MessageController struct {
 }
 
 func (c *MessageController) List() {
-
 
 	limit, _ := beego.AppConfig.Int64("limit") // 一页的数量
 	page, _ := c.GetInt64("page", 1)           // 页数
@@ -31,7 +30,7 @@ func (c *MessageController) List() {
 
 	if status != 0 {
 		qs = qs.Filter("status", status)
-	}else{
+	} else {
 		qs = qs.Filter("status__lt", 3)
 	}
 
@@ -41,11 +40,9 @@ func (c *MessageController) List() {
 		c.Abort("404")
 	}
 
-
 	/*c.Data["json"]= &messages
 	c.ServeJSON()
 	c.StopRun()*/
-
 
 	// 统计
 	count, err := qs.Count()
@@ -56,7 +53,6 @@ func (c *MessageController) List() {
 	c.Data["Data"] = &messages
 	c.Data["Paginator"] = utils.GenPaginator(page, limit, count)
 	c.Data["StatusText"] = admin.Status
-
 
 	c.TplName = "admin/message-list.html"
 }
@@ -86,7 +82,6 @@ func (c *MessageController) Update() {
 
 	id, _ := c.GetInt("id", 0)
 	reply := c.GetString("reply")
-
 
 	/*c.Data["json"] = c.Input()
 	c.ServeJSON()

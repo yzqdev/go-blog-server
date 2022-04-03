@@ -1,20 +1,20 @@
 package admin
 
 import (
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
 	"time"
 )
 
 type Review struct {
-	Id       	int
-	Name    	string
-	Review   	string 		`orm:"size(500)"`
-	Reply     	string    	`orm:"size(500)"`
-	Site   		string		`orm:"size(500)"`
-	Created  	time.Time 	`orm:"auto_now_add;type(datetime)"`
-	Updated  	time.Time 	`orm:"auto_now;type(datetime)"`
-	Status   	int       	`orm:"default(1)"`
-	ArticleId 	int
+	Id        int
+	Name      string
+	Review    string    `orm:"size(500)"`
+	Reply     string    `orm:"size(500)"`
+	Site      string    `orm:"size(500)"`
+	Created   time.Time `orm:"auto_now_add;type(datetime)"`
+	Updated   time.Time `orm:"auto_now;type(datetime)"`
+	Status    int       `orm:"default(1)"`
+	ArticleId int
 }
 
 func init() {

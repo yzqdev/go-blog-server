@@ -2,7 +2,7 @@ package admin
 
 import (
 	"errors"
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
 	"go-blog/models/admin"
 	"strconv"
 	"strings"
@@ -23,11 +23,11 @@ func (c *LinkController) URLMapping() {
 	c.Mapping("Add", c.Add)
 }
 
-
 // @router /link/add [get]
 func (c *LinkController) Add() {
 	c.TplName = "admin/link-add.html"
 }
+
 // Post ...
 // @Title Post
 // @Description create Menu
@@ -39,12 +39,12 @@ func (c *LinkController) Post() {
 
 	response := make(map[string]interface{})
 
-	sort , _ := c.GetInt("sort")
+	sort, _ := c.GetInt("sort")
 
 	if _, err := admin.AddLink(&admin.Link{
-		Title:  c.GetString("title"),
-		Url:    c.GetString("url"),
-		Sort:   sort,
+		Title: c.GetString("title"),
+		Url:   c.GetString("url"),
+		Sort:  sort,
 	}); err == nil {
 		response["msg"] = "新增成功！"
 		response["code"] = 200
@@ -165,7 +165,7 @@ func (c *LinkController) Put() {
 	v := admin.Link{Id: id}
 	v.Url = c.GetString("url")
 	v.Title = c.GetString("title")
-	v.Sort,_ = c.GetInt("sort")
+	v.Sort, _ = c.GetInt("sort")
 	if err := admin.UpdateLinkById(&v); err == nil {
 		response["msg"] = "修改成功！"
 		response["code"] = 200

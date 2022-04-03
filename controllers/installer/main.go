@@ -1,7 +1,7 @@
 package installer
 
 import (
-	"github.com/astaxie/beego"
+	beego "github.com/beego/beego/v2/server/web"
 	"os"
 )
 
@@ -9,7 +9,7 @@ type InstallController struct {
 	beego.Controller
 }
 
-func (c *InstallController) CheckEnv()  {
+func (c *InstallController) CheckEnv() {
 
 	c.Data["json"] = "不行,还没安装!"
 	c.ServeJSON()
@@ -27,5 +27,5 @@ func (c *InstallController) Install() {
 		c.StopRun()
 	}
 
-	c.Redirect("/",302)
+	c.Redirect("/", 302)
 }

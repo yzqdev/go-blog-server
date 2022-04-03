@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"github.com/astaxie/beego"
+	beego "github.com/beego/beego/v2/server/web"
 	"go-blog/models/admin"
 	"time"
 )
@@ -21,10 +21,10 @@ func (ctl *BaseController) Prepare() {
 		ctl.User = user.(admin.User)
 		ctl.Data["LoginUser"] = user
 		//ctl.Data["LastLogin"] = ctl.GetSession("LastLogin")
-	}else{
+	} else {
 		//ctl.TplName = "admin/login.html"
 		//render.Redirect{401,'/',"1"}
-		ctl.Redirect("/admin/login",302)
+		ctl.Redirect("/admin/login", 302)
 	}
 
 }

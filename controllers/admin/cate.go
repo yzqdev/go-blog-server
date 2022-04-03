@@ -1,8 +1,8 @@
 package admin
 
 import (
-	"github.com/astaxie/beego/orm"
-	"github.com/astaxie/beego/validation"
+	"github.com/beego/beego/v2/client/orm"
+	"github.com/beego/beego/v2/core/validation"
 	"go-blog/models/admin"
 	"go-blog/utils"
 )
@@ -84,8 +84,6 @@ func (c *CateController) Save() {
 		}
 	}
 
-
-
 	if id, err := o.Insert(&category); err == nil {
 		response["msg"] = "新增成功！"
 		response["code"] = 200
@@ -136,8 +134,6 @@ func (c *CateController) Update() {
 				c.StopRun()
 			}
 		}
-
-
 
 		if _, err := o.Update(&category); err == nil {
 			response["msg"] = "修改成功！"

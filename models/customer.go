@@ -3,11 +3,10 @@ package models
 import (
 	"errors"
 	"fmt"
+	"github.com/beego/beego/v2/client/orm"
 	"reflect"
 	"strings"
 	"time"
-
-	"github.com/astaxie/beego/orm"
 )
 
 type Customer struct {
@@ -171,7 +170,7 @@ func CustomerLogin(username, password string) (*Customer, bool) {
 		err      error
 	)
 	ok := false
-	o.Using("default")
+	//o.Using("default")
 	cond := orm.NewCondition()
 	cond = cond.And("status", 1).And("Username", username).Or("Email", username).Or("Uid", username).Or("Phone", username)
 	qs := o.QueryTable(&customer)

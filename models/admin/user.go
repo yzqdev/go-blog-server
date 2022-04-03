@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
 	"time"
 )
 
@@ -19,14 +19,14 @@ func init() {
 	orm.RegisterModel(new(User))
 }
 
-func Login(username,password string) (*User,bool) {
+func Login(username, password string) (*User, bool) {
 	o := orm.NewOrm()
 	var (
 		user User
 		err  error
 	)
 	ok := false
-	o.Using("default")
+	//o.Using("default")
 	cond := orm.NewCondition()
 	cond = cond.And("status", 1).And("Name", username).Or("Email", username)
 	qs := o.QueryTable(&user)
@@ -36,5 +36,5 @@ func Login(username,password string) (*User,bool) {
 			ok = true
 		}
 	}
-	return &user,ok
+	return &user, ok
 }

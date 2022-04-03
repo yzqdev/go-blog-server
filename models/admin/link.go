@@ -3,7 +3,7 @@ package admin
 import (
 	"errors"
 	"fmt"
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
 	"reflect"
 	"strings"
 )

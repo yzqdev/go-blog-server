@@ -1,8 +1,8 @@
 package wechat
 
 import (
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
+	beego "github.com/beego/beego/v2/server/web"
 	"github.com/silenceper/wechat"
 	wcMaterial "github.com/silenceper/wechat/material"
 	"go-blog/models/admin"
@@ -13,7 +13,7 @@ type MaterialController struct {
 	BaseController
 }
 
-func (c *MaterialController)AddNews()  {
+func (c *MaterialController) AddNews() {
 	response := make(map[string]interface{})
 
 	wc := wechat.NewWechat(config)
@@ -26,10 +26,7 @@ func (c *MaterialController)AddNews()  {
 	c.StopRun()
 
 	material := wc.GetMaterial()
-	ids,e := material.ImageUpload("E:/project/go/src/go-blog/static/uploads/20190830155527847.jpg")
-
-
-
+	ids, e := material.ImageUpload("E:/project/go/src/go-blog/static/uploads/20190830155527847.jpg")
 
 	response["msg"] = "获取失败！"
 	response["code"] = 500
@@ -40,16 +37,13 @@ func (c *MaterialController)AddNews()  {
 	c.ServeJSON()
 	c.StopRun()
 
-
-
-
 	id, _ := c.GetInt("id", 0)
 	var articles []*admin.Article
 	o := orm.NewOrm()
-	err := o.QueryTable(new(admin.Article)).RelatedSel().Filter("id",id).One(&articles)
+	err := o.QueryTable(new(admin.Article)).RelatedSel().Filter("id", id).One(&articles)
 	data := articles[0]
 
-	if err != nil{
+	if err != nil {
 		response["msg"] = "获取失败！"
 		response["code"] = 500
 		response["err"] = err.Error()
@@ -61,21 +55,21 @@ func (c *MaterialController)AddNews()  {
 	//material := wc.GetMaterial()
 
 	var article []*wcMaterial.Article
-	var url = beego.AppConfig.String("url")
-	article = append(article,&wcMaterial.Article{
-		Title:data.Title,
-		ThumbMediaID:"12",
-		Author:data.User.Name,
-		Digest:data.Remark,
-		ShowCoverPic:1,
-		Content:data.Desc,
-		ContentSourceURL: url + "/detail/" + strconv.Itoa(id)+ ".html",
-		URL:"",
-		DownURL:"",
+	var url, _ = beego.AppConfig.String("url")
+	article = append(article, &wcMaterial.Article{
+		Title:            data.Title,
+		ThumbMediaID:     "12",
+		Author:           data.User.Name,
+		Digest:           data.Remark,
+		ShowCoverPic:     1,
+		Content:          data.Desc,
+		ContentSourceURL: url + "/detail/" + strconv.Itoa(id) + ".html",
+		URL:              "",
+		DownURL:          "",
 	})
-	mid,err := material.AddNews(article)
+	mid, err := material.AddNews(article)
 
-	if err != nil{
+	if err != nil {
 		response["msg"] = "获取失败！"
 		response["code"] = 500
 		response["err"] = err.Error()
