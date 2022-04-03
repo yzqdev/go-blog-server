@@ -2,3 +2,5 @@
 ./installed
 ./conf/app.conf
 ./vendor
+*.exe
+go.sum

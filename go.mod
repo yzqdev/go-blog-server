@@ -14,6 +14,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/smartystreets/goconvey v1.7.2
 	github.com/toolkits/pkg v1.2.9
+
 )
 
 require (
@@ -43,6 +44,10 @@ require (
 	github.com/smartystreets/assertions v1.2.0 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/temoto/robotstxt v1.1.2 // indirect
+	github.com/toolkits/file v0.0.0-20160325033739-a5b3c5147e07 // indirect
+	github.com/toolkits/nux v0.0.0-20200401110743-debb3829764a // indirect
+	github.com/toolkits/slice v0.0.0-20141116085117-e44a80af2484 // indirect
+	github.com/toolkits/sys v0.0.0-20170615103026-1f33b217ffaf // indirect
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
 	golang.org/x/net v0.0.0-20210916014120-12bc252f5db8 // indirect
 	golang.org/x/sys v0.0.0-20210423082822-04245dca01da // indirect
